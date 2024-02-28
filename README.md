@@ -5,4 +5,6 @@ Repositório para armazenar os código desenvolvidos
 
 npm install -g expo-cli
 
-npx expo start
+npx create-expo-app --template
+
+npm start
