@@ -5,16 +5,16 @@ import { styles } from './Styles';
 
 export default function App() {
 
-  const [currentNumber, setCurrentNumber] = useState("")  
+  const [currentValue, setCurrentValue] = useState("")  
 
-  const keys = ['AC', '( )', '%', '/', '7', '8', '9', 'X', '4', '5', '6', '-', '1', '2', '3', '+', '0', ',', '=']
+  const keys = ['AC', '( )', '%', '/', '7', '8', '9', 'X', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '=']
 
   function isText(c) {
     return c == 'AC' || c == '( )' || c == '%';
   }
 
   function isSignal(c) {
-    return c == '+' || c == '-' || c == '/' || c == 'X' || c == 'x' || c == '='
+    return c == '+' || c == '-' || c == '/' || c == 'X' || c == 'x' || c == '=' || c == '%'
   }
   
   function isZero(c) {
@@ -33,39 +33,37 @@ export default function App() {
   }
 
   function calculator() {
-    let stringSplit = currentNumber.split(' ')
-    let firstNumber = stringSplit[0]
-    let signal = stringSplit[1]
-    let secondNumber = stringSplit[2]
+    let stringValue = currentValue.replace('x', '*')
     let result = ''
-
-    switch(signal){
-      case '+':        
-        result = parseFloat(firstNumber) + parseFloat(secondNumber)
-        break;
-      case '-':        
-        result = parseFloat(firstNumber) - parseFloat(secondNumber)
-        break;
-      case '/':        
-        result = (parseFloat(firstNumber) / parseFloat(secondNumber)).toFixed(2)
-        break;
-      case 'x':        
-        result = parseFloat(firstNumber) * parseFloat(secondNumber)
-        break;
+    
+    if (stringValue.indexOf('%') != -1) {
+      let stringSplit = stringValue.split(' ')
+      let firstNumber = stringSplit[0]
+      let secondNumber = stringSplit[2]
+      result = (parseFloat(firstNumber) / 100) * parseFloat(secondNumber)
+    } else {
+      result = eval(stringValue)  
     }
-    setCurrentNumber(result)    
+
+    if ((result.toString()).indexOf('.') != -1) {
+      result = result.toFixed(2)
+    }
+
+    setCurrentValue(result.toString())
   }
 
   function handleInput(btnPress) {       
     if (btnPress == 'AC') {      
-      setCurrentNumber("")      
+      setCurrentValue("")      
     } else if (btnPress == '=') {
-      calculator()      
+      calculator()     
+    } else if(btnPress == '( )') {
+      setCurrentValue(`(${currentValue})`) 
     } else {            
       if (isSignal(btnPress)) {
-        setCurrentNumber(currentNumber + ' ' + (btnPress == 'X' ? 'x' : btnPress) + ' ')               
+        setCurrentValue(currentValue + ' ' + (btnPress == 'X' ? 'x' : btnPress) + ' ')               
       } else {
-        setCurrentNumber(currentNumber + '' + btnPress)             
+        setCurrentValue(currentValue + '' + btnPress)             
       }      
     }    
   }
@@ -75,7 +73,7 @@ export default function App() {
       <StatusBar style="inverted" />
 
       <View style={styles.result}>
-        <Text style={styles.resulttext}>{currentNumber}</Text>
+        <Text style={styles.resulttext}>{currentValue}</Text>
       </View>      
       <View style={styles.keyboard}>
         {keys.map((key) =>          
