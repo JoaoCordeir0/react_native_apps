@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     icon: {
-        marginTop: -50,
+        marginTop: -100,
         maxWidth: 200,
         maxHeight: 200,
     },
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         textAlign: 'center',
         fontSize: 18,
-    }
+    },
 });
 
 export default styles

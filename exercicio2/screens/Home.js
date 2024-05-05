@@ -2,33 +2,33 @@ import React, { useState } from "react";
 import { View, TextInput, Button } from "react-native";
 
 const Home = ({ navigation }) => {
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [phone, setPhone] = useState('')
+    const [title, setTitle] = useState('')
+    const [price, setPrice] = useState('')
+    const [qtd, setQtd] = useState('')
 
     const handleNavigate = () => {
-        navigation.navigate('Display', { name, email, phone })
+        navigation.navigate('Stock', { title, price, qtd })
     }
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <TextInput 
                 style={{borderWidth: 1, padding: 10, marginBottom: 10}}
-                value={name}
-                onChangeText={setName}
-                placeholder="Informe o nome"
+                value={title}
+                onChangeText={setTitle}
+                placeholder="Informe o titulo"
             />    
             <TextInput 
                 style={{borderWidth: 1, padding: 10, marginBottom: 10}}
-                value={email}
-                onChangeText={setEmail}
-                placeholder="Informe o email"
+                value={price}
+                onChangeText={setPrice}
+                placeholder="Informe o preço"
             /> 
             <TextInput 
                 style={{borderWidth: 1, padding: 10, marginBottom: 10}}
-                value={phone}
-                onChangeText={setPhone}
-                placeholder="Informe o telefone"
+                value={qtd}
+                onChangeText={setQtd}
+                placeholder="Informe a quantidade"
             /> 
             <Button title="Cadastrar" onPress={handleNavigate} />
         </View>
