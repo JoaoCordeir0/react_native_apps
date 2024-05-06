@@ -3,10 +3,12 @@ import { View, Image, TextInput, Button, TouchableOpacity, Text, Alert } from "r
 import AntDesign from '@expo/vector-icons/AntDesign';
 import axios from "axios";
 import styles from "./style";
+import Loader from "../../components/Loader";
 
 const Login = ({ navigation }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const sendLogin = () => {        
         if (!username || !password) {            
@@ -14,16 +16,19 @@ const Login = ({ navigation }) => {
             return    
         }
         
+        setIsLoading(true)
+
         axios.post(process.env.API_URL + '/user/login', {
             username: username,
             password: password,
         }).then(response => {            
+            setIsLoading(false)
             if (!response.data.access_token) {            
-                Alert.alert(' ', response.data.message)
+                Alert.alert(' ', response.data.message)                
                 return    
             }
             let token = response.data.access_token
-            let user = response.data.user
+            let user = response.data.user            
             navigation.navigate('Reports', { token, user })
         })        
     }
@@ -39,6 +44,7 @@ const Login = ({ navigation }) => {
                     Login <AntDesign name="login" size={18} color="#D0BBFE" />
                 </Text>
             </TouchableOpacity>
+            <Loader isLoading={isLoading} />
         </View>
     )
 }

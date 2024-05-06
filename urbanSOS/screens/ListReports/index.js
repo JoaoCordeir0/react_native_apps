@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { View, FlatList, TouchableOpacity, Alert } from "react-native";
 import { Card, Text } from 'react-native-paper';
 import styles from "./style";
 import axios from "axios";
@@ -23,7 +23,7 @@ const Reports = ({ route, navigation }) => {
         navigation.navigate('Add report', { token, user })
     }
     
-    loadReports()
+    loadReports()    
    
     return (
         <View style={styles.container}>            

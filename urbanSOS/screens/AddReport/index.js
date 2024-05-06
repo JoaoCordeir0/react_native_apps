@@ -8,13 +8,14 @@ const AddReport = ({ route, navigation }) => {
     const { token, user } = route.params
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')    
+    const [isLoading, setIsLoading] = useState(false)
 
     const registerReport = () => {        
         if (!title || !description) {            
             Alert.alert(' ', 'Fill in all the information')
             return    
-        }
-        
+        }                
+
         axios.put(`${process.env.API_URL}/report/register?token=${token}`, {
             title: title,
             description: description,
@@ -25,8 +26,14 @@ const AddReport = ({ route, navigation }) => {
             userId: user.id,
             status: 1,
             cityId: 1
-        }).then(response => {                        
-            navigation.navigate('Reports', { token, user })
+        }).then(response => {                  
+            Alert.alert(' ', response.data.message, [
+                {
+                  text: 'Ok',
+                  onPress: () => navigation.navigate('Reports', { token, user }),
+                  style: 'cancel',
+                },
+            ])                           
         })
     }
 
@@ -39,7 +46,7 @@ const AddReport = ({ route, navigation }) => {
                 <Text style={styles.txt} onPress={() => registerReport()}>                    
                     Register &nbsp; <FontAwesome6 name="circle-plus" size={18} color="#D0BBFE" />
                 </Text>
-            </TouchableOpacity>
+            </TouchableOpacity>                        
         </View>
     )
 }
