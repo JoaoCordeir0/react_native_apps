@@ -7,8 +7,7 @@ import styles from "./style";
 const AddReport = ({ route, navigation }) => {
     const { token, user } = route.params
     const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')    
-    const [isLoading, setIsLoading] = useState(false)
+    const [description, setDescription] = useState('')        
 
     const registerReport = () => {        
         if (!title || !description) {            
