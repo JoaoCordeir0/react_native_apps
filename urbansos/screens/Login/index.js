@@ -4,43 +4,44 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import axios from "axios";
 import styles from "./style";
 import Loader from "../../components/Loader";
+import { API_URL } from "@env"
 
 const Login = ({ navigation }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
-    const sendLogin = () => {        
-        if (!username || !password) {            
+    const sendLogin = () => {
+        if (!username || !password) {
             Alert.alert(' ', 'Fill in all the information')
-            return    
+            return
         }
-        
+
         setIsLoading(true)
 
-        axios.post(process.env.API_URL + '/user/login', {
+        axios.post(API_URL + '/user/login', {
             username: username,
             password: password,
-        }).then(response => {            
+        }).then(response => {
             setIsLoading(false)
-            if (!response.data.access_token) {            
-                Alert.alert(' ', response.data.message)                
-                return    
+            if (!response.data.access_token) {
+                Alert.alert(' ', response.data.message)
+                return
             }
             let token = response.data.access_token
-            let user = response.data.user            
+            let user = response.data.user
             navigation.navigate('Reports', { token, user })
-        })        
+        })
     }
 
-    return (        
+    return (
         <View style={styles.container}>
-            <Image style={styles.icon} source={require('../../assets/icon.png')} /> 
+            <Image style={styles.icon} source={require('../../assets/icon.png')} />
             <Text style={styles.title}>UrbanSOS</Text>
             <TextInput style={styles.fields} placeholder='Username' placeholderTextColor='#D0BBFE' onChangeText={(username) => setUsername(username)} maxLength={100}></TextInput>
             <TextInput style={styles.fields} placeholder='Password' placeholderTextColor='#D0BBFE' secureTextEntry={true} onChangeText={(password) => setPassword(password)} maxLength={30}></TextInput>
             <TouchableOpacity style={styles.btn}>
-                <Text style={styles.txt} onPress={() => sendLogin()}>                    
+                <Text style={styles.txt} onPress={() => sendLogin()}>
                     Login <AntDesign name="login" size={18} color="#D0BBFE" />
                 </Text>
             </TouchableOpacity>
