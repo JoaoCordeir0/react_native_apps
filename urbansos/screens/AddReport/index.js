@@ -44,7 +44,7 @@ const AddReport = ({ route, navigation }) => {
         axios.put(`${API_URL}/report/register?token=${token}`, {
             title: title,
             description: description,
-            image: 'react.png',
+            image: image,
             latitude: '-21.8486977',
             longitude: '-46.896965',
             situation: 1,
